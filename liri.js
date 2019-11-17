@@ -1,6 +1,7 @@
 require("dotenv").config();
 const axios = require("axios");
 const fs = require("fs");
+const moment = require('moment');
 const keys = require("./keys.js")
 const Spotify = require('node-spotify-api');
 let spotify = new Spotify(keys.spotify);
@@ -11,7 +12,7 @@ function comprehend(command, param) {
             concertThis(param);
             break;
         case 'spotify-this-song':
-            spotifyThisSong();
+            spotifyThisSong(param);
             break;
         case 'movie-this':
             movieThis(param);
@@ -21,56 +22,85 @@ function comprehend(command, param) {
             break;
         default:
             console.log("Try a command like concert-this, spotify-this-song, movie-this, or do-what-it-says.");
-    }   
+    }
 }
 
 comprehend(process.argv[2], process.argv[3]);
 
-console.log("Second Argument: ", process.argv[3]);
+// Debugging
+// console.log("Second Argument: ", process.argv[3]);
 
 function concertThis(arg) {
     let artist = arg;
-    if (typeof artist != String){
+    if (typeof artist === 'undefined') {
         artist = "AceofBase";
     }
-    console.log("Inside concertThis function, using: ", artist);
+    // Debugging
+    // console.log("Inside concertThis function, using: ", artist);
     axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp")
-  .then(response => {
-    console.log(response.data);
-    console.log("Name of Venue: ", response.data[0].venue.name);
-    console.log("Venue Location: ",  response.data[0].venue.city +  "," , response.data[0].venue.country);
-    console.log("Date of Event: ", response.data[0].datetime);
-  })
-  .catch(error => {
-    console.log(error);
-  });
-    
+        .then(response => {
+            // console.log(response.data);
+            console.log("Name of Venue: ", response.data[0].venue.name);
+            console.log("Venue Location: ", response.data[0].venue.city + ",", response.data[0].venue.country);
+            console.log("Date of Event: ", moment.unix(response.data[0].datetime).format("MM/DD/YYYY"));
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
 }
 
-function spotifyThisSong() {
-    console.log("Inside spotifyThis function.");
+function spotifyThisSong(song) {
+    // Debugging
+    // console.log("Inside spotifyThis function.");
+    if (typeof song === 'undefined') {
+        spotify.search({ type: 'track', query: "The Sign by Ace of Base" }, function (err, data) {
+            if (err) {
+                return console.log('Error occurred: ' + err);
+            }
+            // Debugging
+            // console.log(data.tracks.items[2]);
+            console.log("Artist(s): ", data.tracks.items[2].artists[0].name);
+            console.log("Song Name: ", data.tracks.items[2].name);
+            console.log("Preview Link: ", data.tracks.items[2].external_urls.spotify);
+            console.log("Album: Single");
+        });
+    }
+    else {
+        spotify.search({ type: 'track', query: song }, function (err, data) {
+            if (err) {
+                return console.log('Error occurred: ' + err);
+            }
+            // Debugging
+            // console.log(data.tracks.items[0]);
+            console.log("Artist(s): ", data.tracks.items[0].artists[0].name);
+            console.log("Song Name: ", data.tracks.items[0].name);
+            console.log("Preview Link: ", data.tracks.items[0].external_urls.spotify);
+            console.log("Album: ", data.tracks.items[0].album.name);
+        });
+    }
 }
 function movieThis(arg) {
     let movie = arg;
-    if (typeof movie === 'undefined'){
+    if (typeof movie === 'undefined') {
         movie = "Mr.Nobody";
     }
     axios.get("http://www.omdbapi.com/?t=" + movie + "&apikey=trilogy")
-    .then(response => {
-        // console.log(response.data);
-        console.log("Title of the Movie: ", response.data.Title);
-        console.log("Year: ", response.data.Year);
-        console.log("IMDB Rating: ", response.data.imdbRating);
-        console.log("Rotten Tomatoes Rating: ", response.data.Ratings[1].Value); 
-        console.log("Country(s): ", response.data.Country); 
-        console.log("Language(s): ", response.data.Language); 
-        console.log("Plot: ", response.data.Plot);
-        console.log("Actors: ", response.data.Actors);
-     
-    })
-    .catch(error => {
-        console.log(error);
-    });
+        .then(response => {
+            // console.log(response.data);
+            console.log("Title of the Movie: ", response.data.Title);
+            console.log("Year: ", response.data.Year);
+            console.log("IMDB Rating: ", response.data.imdbRating);
+            console.log("Rotten Tomatoes Rating: ", response.data.Ratings[1].Value);
+            console.log("Country(s): ", response.data.Country);
+            console.log("Language(s): ", response.data.Language);
+            console.log("Plot: ", response.data.Plot);
+            console.log("Actors: ", response.data.Actors);
+
+        })
+        .catch(error => {
+            console.log(error);
+        });
 }
 
 function doWhatItSays() {
