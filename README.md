@@ -5,19 +5,19 @@ This terminal based application makes API calls to OMDB, Bands in Town, and Spot
 
 [X] Get Spotify API working.
 
-[ ] Get IMDB API working.
+[X] Get IMDB API working.
 
 [X] Get Bands In Town API working.
 
-[ ] Get concert-this command to work.
+[X] Get concert-this command to work.
 
-[ ] Use moment to format time for concert-this as "MM/DD/YYYY"
+[X] Use moment to format time for concert-this as "MM/DD/YYYY"
 
-[ ] Get spotify-this-song command to work.
+[X] Get spotify-this-song command to work.
 
-[ ] Get movie-this command to work.
+[X] Get movie-this command to work.
 
-[ ] Get do-what-it-says command to work.
+[X] Get do-what-it-says command to work.
 
 ### node liri.js concert-this <artist/band name here>
 
@@ -27,7 +27,11 @@ Searches the Bands in Town Artist Events API for an artist and render the follow
 - Venue location
 - Date of the Event
 
-[ ] insert image of it working here
+Without a Query (defaults to Ace of Base)
+![File not shown](screenshots/concert-this-ace-of-base.png "concert-this, Ace of Base")
+
+With a Query
+![File not shown](screenshots/concert-this-taylor-swift.png "concert-this, Taylor Swift")
 
 ### node liri.js spotify-this-song '<song name here>'
 
@@ -39,12 +43,13 @@ This will show the following information about the song in your terminal/bash wi
 - A preview link of the song from Spotify
 - The album that the song is from
 
-[ ] insert image of it working here
+![File not shown](screenshots/node-liri.js-spotify-this-song-Delicate.png "Delicate by Taylor Swift")
 
 
 If no song is provided then the program will default to "The Sign" by Ace of Base.
 
-[ ] insert image of it working here
+![File not shown](screenshots/node-liri.js-spotify-this-song.png "The Sign by Ace of Base")
+
 
 ### node liri.js movie-this '<movie name here>'
 
@@ -59,7 +64,7 @@ This will output the following information to your terminal/bash window:
    * Plot of the movie.
    * Actors in the movie.
 
-[ ] insert image of it working here
+![File not shown](screenshots/node-liri.js-movie-this-Moana.png "Moana")
 
 If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
 
@@ -69,18 +74,12 @@ If the user doesn't type a movie in, the program will output data for the movie 
 
 Using the fs Node package, LIRI will take the text inside of random.txt and then use it to call one of LIRI's commands.
 
-It should run spotify-this-song for "I Want it That Way," as follows the text in random.txt.
+It should run spotify-this-song for "I Want It That Way," as follows the text in random.txt.
 
-[ ] insert image of it working here
+![File not shown](screenshots/node-liri.js-do-what-it-says.png "I Want It That Way")
 
-[ ] Edit the text in random.txt to test out the feature for movie-this and concert-this.
+Edit the text in random.txt to test out the feature for movie-this and concert-this.
 
-[ ] insert image of it working here
+![File not shown](screenshots/node-liri.js-do-what-it-says-movie-this.png "Frozen")
 
-#### BONUS
-
-[ ] In addition to logging the data to your terminal/bash window, output the data to a .txt file called log.txt.
-
-[ ] Make sure you append each command you run to the log.txt file.
-
-[ ] Do not overwrite your file each time you run a command.
+![File not shown](screenshots/concert-this-one-ok-rock.png "Frozen")

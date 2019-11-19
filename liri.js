@@ -33,16 +33,18 @@ comprehend(process.argv[2], process.argv[3]);
 function concertThis(arg) {
     let artist = arg;
     if (typeof artist === 'undefined') {
-        artist = "AceofBase";
+        artist = "Ace+of+Base";
     }
+    let query = `https://rest.bandsintown.com/artists/${artist}/events?app_id=codingbootcamp`;
     // Debugging
     // console.log("Inside concertThis function, using: ", artist);
-    axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp")
+    // console.log("Query: ", query);
+    axios.get(query)
         .then(response => {
             // console.log(response.data);
             console.log("Name of Venue: ", response.data[0].venue.name);
             console.log("Venue Location: ", response.data[0].venue.city + ",", response.data[0].venue.country);
-            console.log("Date of Event: ", moment.unix(response.data[0].datetime).format("MM/DD/YYYY"));
+            console.log("Date of Event: ", moment(response.data[0].datetime).format("MM/DD/YYYY"));
         })
         .catch(error => {
             console.log(error);
@@ -85,7 +87,7 @@ function movieThis(arg) {
     if (typeof movie === 'undefined') {
         movie = "Mr.Nobody";
     }
-    axios.get("http://www.omdbapi.com/?t=" + movie + "&apikey=trilogy")
+    axios.get(`http://www.omdbapi.com/?t=${movie}&apikey=trilogy`)
         .then(response => {
             // console.log(response.data);
             console.log("Title of the Movie: ", response.data.Title);
@@ -109,13 +111,14 @@ function doWhatItSays() {
             return console.log(error);
         }
 
-        console.log(data);
+        // Debugging
+        // console.log(data);
 
         // Then split it by commas (to make it more readable)
         let commands = data.split(",");
 
         // We will then re-display the content as an array for later use.
-        console.log(commands);
+        // console.log(commands);
         comprehend(commands[0], commands[1]);
 
     });
