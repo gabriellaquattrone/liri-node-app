@@ -33,7 +33,7 @@ Without a Query (defaults to Ace of Base)
 With a Query
 ![File not shown](screenshots/concert-this-taylor-swift.png "concert-this, Taylor Swift")
 
-### node liri.js spotify-this-song '<song name here>'
+### node liri.js spotify-this-song <song name here>
 
 This will show the following information about the song in your terminal/bash window
 
@@ -51,7 +51,7 @@ If no song is provided then the program will default to "The Sign" by Ace of Bas
 ![File not shown](screenshots/node-liri.js-spotify-this-song.png "The Sign by Ace of Base")
 
 
-### node liri.js movie-this '<movie name here>'
+### node liri.js movie-this <movie name here>
 
 This will output the following information to your terminal/bash window:
 
